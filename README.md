@@ -13,26 +13,166 @@ records and is not intended for real clinical use.
 
 ### Prerequisites
 
-- Node.js 20 LTS or newer and npm 10 or newer
-- PostgreSQL 16, or Docker Desktop with Docker Compose
-- Expo Go compatible with Expo SDK 54, or an Android emulator
-- Git
+- [Node.js](https://nodejs.org/en/download) 20 LTS or newer (including npm 10
+  or newer)
+- One database option:
+  - [Docker Desktop](https://www.docker.com/products/docker-desktop/) with
+    Docker Compose (recommended for the easiest setup). On Windows, Docker
+    also requires hardware virtualisation and WSL 2.
+  - PostgreSQL 16
+- [Expo Go](https://expo.dev/go) compatible with Expo SDK 54, or an Android
+  emulator configured through Android Studio
+- [Git](https://git-scm.com/downloads)
+
+After installing the prerequisites, open a new PowerShell window and verify them:
+
+```powershell
+node --version
+npm --version
+git --version
+docker --version
+docker compose version
+```
+
+The two Docker commands are required only when using the recommended Docker
+database option. If a command is not recognised after installation, restart
+PowerShell (and, if necessary, Windows) so the updated `PATH` is loaded. Make
+sure Docker Desktop is running before continuing.
+
+#### Windows preparation for Docker Desktop
+
+Docker Desktop runs this project's Linux PostgreSQL container through WSL 2.
+Before continuing on Windows:
+
+1. Open **Task Manager > Performance > CPU** and confirm that
+   **Virtualization** says **Enabled**. If it is disabled, enable Intel VT-x,
+   AMD-V, or SVM Mode in the computer's BIOS/UEFI settings.
+2. Open PowerShell as Administrator and run:
+
+   ```powershell
+   wsl --install
+   ```
+
+3. Restart Windows when requested, open Docker Desktop, and wait until its
+   engine reports that it is running.
+4. Verify WSL and the Docker engine:
+
+   ```powershell
+   wsl --status
+   docker info
+   ```
+
+If Docker Desktop reports `Virtualization support not detected`, complete steps
+1-3 before trying `docker compose`. On a managed computer, an administrator may
+need to enable virtualisation. Installing PostgreSQL directly with Option B
+avoids the Docker and WSL requirement.
+
+#### PowerShell note for npm
+
+Some Windows PowerShell installations block `npm.ps1` with a message that
+running scripts is disabled. In that case, use `npm.cmd` in place of `npm` for
+every command in this README; this does not require weakening the PowerShell
+execution policy. For example:
+
+```powershell
+npm.cmd ci
+npm.cmd run db:migrate
+npm.cmd run dev:api
+```
 
 ### Installation
 
 ```powershell
 git clone <repository-url>
-cd "Blood Bank Central"
-Copy-Item .env.example .env
+cd blood-bank-central
 npm ci
-docker compose up -d
+# Create the backend API configuration
+Copy-Item .env.example apps/api/.env
+
+# Create the separate mobile app configuration
+Copy-Item apps/mobile/.env.example apps/mobile/.env
+```
+
+Replace `<repository-url>` with the repository's Git URL. If Git creates a
+directory with a different name, change `cd blood-bank-central` to that name.
+
+The project contains two applications, and each one needs its own configuration:
+
+- `apps/api/.env` configures the backend and database.
+- `apps/mobile/.env` tells the mobile app where it can reach the backend.
+
+Do not copy the root `.env.example` into `apps/mobile`; it contains backend-only
+settings.
+
+#### Required: configure the mobile API address
+
+Do this now, before starting Expo. Open the new mobile environment file:
+
+```powershell
+notepad apps/mobile/.env
+```
+
+If you will use a physical phone, first run `ipconfig` and find the computer's
+Wi-Fi adapter **IPv4 Address**. Replace `YOUR_COMPUTER_IP` with that address:
+
+```env
+EXPO_PUBLIC_API_URL=http://192.168.1.20:4000/api
+```
+
+`192.168.1.20` is only an example; do not copy it unless it is actually your
+computer's address. The phone and computer must be connected to the same Wi-Fi.
+This LAN address normally also works in the Android emulator, so it is the
+recommended setting when testing both a phone and an emulator.
+
+If you will use only an Android Studio emulator, use this instead:
+
+```env
+EXPO_PUBLIC_API_URL=http://10.0.2.2:4000/api
+```
+
+For web or an iOS simulator running on the same computer, use:
+
+```env
+EXPO_PUBLIC_API_URL=http://localhost:4000/api
+```
+
+#### Option A: PostgreSQL with Docker (recommended)
+
+Start PostgreSQL and wait until it is healthy before running the database setup:
+
+```powershell
+docker compose up -d --wait
 npm run db:migrate
 npm run db:seed
 ```
 
 `npm run db:seed` clears existing application rows before recreating the fictional
-demo dataset. Do not run it against a production database. A separately installed
-PostgreSQL server can be used by changing `DATABASE_URL` in `.env`.
+demo dataset. Do not run it against a production database.
+
+If your Docker Compose version does not support `--wait`, run
+`docker compose up -d`, wait until `docker compose ps` reports the database as
+healthy, and then run the migration and seed commands.
+
+#### Option B: A locally installed PostgreSQL server
+
+Create a PostgreSQL user and database using pgAdmin or `psql`. The default
+development values expected by this project are:
+
+```text
+Database: bloodbank
+User: bloodbank
+Password: bloodbank
+Host: localhost
+Port: 5432
+```
+
+Alternatively, use your own values and update `DATABASE_URL` in
+`apps/api/.env`. Once PostgreSQL is running and the database exists, run:
+
+```powershell
+npm run db:migrate
+npm run db:seed
+```
 
 ### Running the application
 
@@ -48,15 +188,17 @@ Start Expo in another terminal:
 npm run dev:mobile
 ```
 
-Press `a` to open an Android emulator or scan the QR code with Expo Go. For a
-physical phone, set `EXPO_PUBLIC_API_URL` to the computer's LAN address:
+The mobile API address must already be configured in `apps/mobile/.env` as
+described in the installation section. Do not start Expo while
+`YOUR_COMPUTER_IP` is still unchanged.
 
-```env
-EXPO_PUBLIC_API_URL=http://192.168.1.20:4000/api
-```
+Restart Expo after changing `.env`. Then press `a` in the Expo terminal to open
+an already-configured Android emulator, or scan the QR code using Expo Go.
 
-The phone and computer must share a network and TCP port `4000` must be allowed
-through the firewall. Tunnel mode is also available:
+For a physical phone, the phone and computer must share a network and TCP port
+`4000` must be allowed through the computer's firewall. Expo tunnel mode can
+help the phone reach the Expo development server, but the app still needs a
+reachable API address:
 
 ```powershell
 npm run dev:mobile -- --tunnel

@@ -137,4 +137,3 @@ dialog; it is not a physical mobile printer.
 - PostgreSQL schema/migrations and `apps/api/src/db/seed.js`
 - `DEMO_LOGINS.txt`
 - This requirements document and `SYSTEM_SPECIFICATION.md`
-
