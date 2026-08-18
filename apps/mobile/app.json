@@ -1,0 +1,18 @@
+{
+  "expo": {
+    "name": "Blood Bank Central",
+    "slug": "blood-bank-central",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#F7F5F2"
+    },
+    "android": {
+      "package": "com.bloodbank.central"
+    },
+    "ios": {
+      "bundleIdentifier": "com.bloodbank.central"
+    }
+  }
+}

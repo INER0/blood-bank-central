@@ -1,0 +1,53 @@
+BLOOD BANK CENTRAL - MALDIVES DEMO LOGINS
+==========================================
+
+College demonstration data only. All people, ID card numbers, phone numbers,
+and credentials below are fictional. Hospital names are used for demonstration.
+
+Shared password for every account: Password123!
+
+APP ADMIN
+admin@demo.mv                 Blood Bank Central Administrator
+
+HOSPITAL MANAGERS AND STAFF
+Indira Gandhi Memorial Hospital, Male
+igmh.manager@demo.mv          Dr. Mariyam Shifa        Hospital Manager
+igmh.staff@demo.mv            Ahmed Nihan              Hospital Staff
+
+ADK Hospital, Male
+adk.manager@demo.mv           Dr. Aishath Naza         Hospital Manager
+adk.staff@demo.mv             Ibrahim Rasheed          Hospital Staff
+
+Hulhumale Hospital, Hulhumale
+hulhumale.manager@demo.mv     Dr. Fathimath Leena      Hospital Manager
+hulhumale.staff@demo.mv       Hassan Rilwan            Hospital Staff
+
+Kulhudhuffushi Regional Hospital, Kulhudhuffushi
+kulhudhuffushi.manager@demo.mv Dr. Aminath Saeed       Hospital Manager
+kulhudhuffushi.staff@demo.mv   Mohamed Shaheen         Hospital Staff
+
+Raa Atoll Hospital, Ungoofaaru
+ungoofaaru.manager@demo.mv    Dr. Hawwa Nisha          Hospital Manager
+ungoofaaru.staff@demo.mv      Ali Sameer               Hospital Staff
+
+Hithadhoo Regional Hospital, Hithadhoo
+hithadhoo.manager@demo.mv     Dr. Zainab Shiyana       Hospital Manager
+hithadhoo.staff@demo.mv       Abdulla Naeem            Hospital Staff
+
+PUBLIC DONORS / PATIENTS
+aminath.raiha@demo.mv         Aminath Raiha            A100001  O+
+mohamed.zaid@demo.mv          Mohamed Zaid             A100002  A+
+hawwa.meera@demo.mv           Hawwa Meera              A100003  B+
+ibrahim.shayaan@demo.mv       Ibrahim Shayaan          A100004  AB+
+aishath.layaan@demo.mv        Aishath Layaan           A100005  O-
+ahmed.naail@demo.mv           Ahmed Naail              A100006  A-
+mariyam.reesha@demo.mv        Mariyam Reesha           A100007  B-
+ali.rameez@demo.mv            Ali Rameez               A100008  AB-
+fathimath.yumna@demo.mv       Fathimath Yumna          A100009  O+
+hassan.riyaz@demo.mv          Hassan Riyaz             A100010  A+
+shiuza.saleem@demo.mv         Shiuza Saleem            A100011  B+
+abdulla.yaamin@demo.mv        Abdulla Yaamin           A100012  O+
+maaisha.latheef@demo.mv       Maaisha Latheef          A100013  A-
+ismail.nabeel@demo.mv         Ismail Nabeel            A100014  AB+
+zainab.shazna@demo.mv         Zainab Shazna            A100015  O-
+yoosuf.ihsan@demo.mv          Yoosuf Ihsan             A100016  B-

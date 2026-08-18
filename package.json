@@ -1,0 +1,27 @@
+{
+  "name": "blood-bank-central",
+  "private": true,
+  "workspaces": ["apps/*"],
+  "dependencies": {
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-svg": "15.12.1"
+  },
+  "devDependencies": {
+    "@types/react": "~19.1.10",
+    "typescript": "~5.9.2"
+  },
+  "overrides": {
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-svg": "15.12.1"
+  },
+  "scripts": {
+    "dev:api": "npm run dev -w @blood-bank/api",
+    "dev:mobile": "npm run start -w @blood-bank/mobile",
+    "db:migrate": "npm run db:migrate -w @blood-bank/api",
+    "db:seed": "npm run db:seed -w @blood-bank/api",
+    "test": "npm run test -w @blood-bank/api",
+    "typecheck": "npm run typecheck -w @blood-bank/mobile"
+  }
+}
