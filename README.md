@@ -1,15 +1,16 @@
 # Blood Bank Central
 
-Blood Bank Central is a Maldives-focused centralised blood bank application built
-as a college project. It connects donors and patients with hospitals and blood
-banks, tracks blood inventory from donation to issue, and uses Maldives ID cards
-as a common identifier for patient history across facilities.
+Blood Bank Central is a college project based on the blood donation process in
+the Maldives. The idea is to give donors, patients, and hospital staff one place
+to check blood availability, manage requests, and follow donated blood from
+collection to issue. Maldives ID cards are used to link a patient's records
+between participating facilities.
 
-The project consists of an Expo React Native mobile client, an Express REST API,
-and a PostgreSQL database. It currently runs locally with fictional demonstration
-records and is not intended for real clinical use.
+The system has an Expo React Native mobile app, an Express REST API, and a
+PostgreSQL database. It currently runs locally and uses fictional demonstration
+data. It is a prototype and must not be used for real clinical work.
 
-## Installation and Run Instructions
+## Setup and Running the Project
 
 ### Prerequisites
 
@@ -214,14 +215,15 @@ npm run typecheck
 npm test
 ```
 
-## Features
+## Main Features
 
-- **Single role-based login:** One form signs in public users, hospital staff,
-  hospital managers, and app administrators, then displays permitted functions.
+- **Role-based login:** Public users, hospital staff, hospital managers, and app
+  administrators use the same login screen. The available screens depend on the
+  account's role.
 - **Maldives identity matching:** Maldives ID card or passport numbers connect a
   patient's records across participating facilities.
-- **Controlled locations:** Atoll and island selectors prevent inconsistent
-  free-text locations and support proximity searches.
+- **Maldives locations:** Atoll and island selectors keep location names
+  consistent and are also used for nearby searches.
 - **Donor profiles:** Blood type, contact details, location, donation history, and
   current eligibility are maintained for public users.
 - **Nearby donation locations:** Users find hospitals within 2.5, 5, 10, or 25 km
@@ -234,8 +236,8 @@ npm test
   hospital, blood type, urgency, units, contact privacy, and notes.
 - **Hospital request queue:** Staff search active/completed requests, compare
   facilities, and assign compatible blood bags or donors.
-- **Inventory CRUD:** Staff create, scan, edit, filter, reserve, issue, quarantine,
-  expire, dispose of, and delete blood bags.
+- **Blood inventory:** Staff can create, scan, edit, filter, reserve, issue,
+  quarantine, expire, dispose of, and delete blood-bag records.
 - **Expiry prioritisation:** Compatible stock that expires sooner is prioritised
   when staff reserve or issue blood.
 - **Bag traceability:** Each bag links to its donor, optional patient, responsible
@@ -255,26 +257,52 @@ npm test
 
 ## Screenshots
 
-Actual screenshots must be captured from the final emulator build before project
-submission. No screenshots are currently stored in the repository, so these are
-marked pending rather than showing inaccurate mockups.
+The screenshots below were captured from the Android emulator using the
+fictional demonstration dataset.
 
-| Main screen | Required content | File to add |
-| --- | --- | --- |
-| Authentication | Sign in, registration, ID and location fields | `docs/screenshots/01-auth.png` |
-| Public home | User summary, eligibility, nearby stock and needs | `docs/screenshots/02-public-home.png` |
-| Donate | Nearby hospitals, hours, radius filters and requests | `docs/screenshots/03-donate.png` |
-| Create request | Hospital, region, blood details and contact privacy | `docs/screenshots/04-create-request.png` |
-| Staff home | Hospital group and operational statistics | `docs/screenshots/05-staff-home.png` |
-| Inventory | Status tabs, search, blood filters and bag actions | `docs/screenshots/06-inventory.png` |
-| Patients/history | Patient search, details and attributed history | `docs/screenshots/07-patients.png` |
-| Request queue | Active/completed views and assignments | `docs/screenshots/08-staff-requests.png` |
-| Hospital management | Hospital settings, hours and staff accounts | `docs/screenshots/09-hospital-admin.png` |
-| App administration | Hospital approvals and central management | `docs/screenshots/10-app-admin.png` |
-| Profile/settings | Account, role, hospital group and settings | `docs/screenshots/11-profile-settings.png` |
+### 1. Authentication
 
-After adding each capture, embed it with Markdown such as
-`![Public home](docs/screenshots/02-public-home.png)`.
+![Authentication screen](docs/screenshots/01-auth.png)
+
+### 2. Public Home
+
+![Public home screen](docs/screenshots/02-public-home.png)
+
+### 3. Donate
+
+![Donate screen](docs/screenshots/03-donate.png)
+
+### 4. Create Request
+
+![Create blood request screen](docs/screenshots/04-create-request.png)
+
+### 5. Staff Home
+
+![Staff home screen](docs/screenshots/05-staff-home.png)
+
+### 6. Inventory
+
+![Blood inventory screen](docs/screenshots/06-inventory.png)
+
+### 7. Patients and History
+
+![Patients and history screen](docs/screenshots/07-patients.png)
+
+### 8. Staff Request Queue
+
+![Staff request queue](docs/screenshots/08-staff-requests.png)
+
+### 9. Hospital Management
+
+![Hospital management screen](docs/screenshots/09-hospital-admin.png)
+
+### 10. Application Administration
+
+![Application administration screen](docs/screenshots/10-app-admin.png)
+
+### 11. Profile and Settings
+
+![Profile and settings screen](docs/screenshots/11-profile-settings.png)
 
 ### Navigation flow
 
@@ -304,7 +332,7 @@ Authentication
 The app does not use an external clinical API. Camera and location access use
 Expo device APIs; application data comes from the local Express API and PostgreSQL.
 
-## Known Issues and Future Improvements
+## Limitations and Possible Improvements
 
 - **Local-only deployment:** A hosted HTTPS API is needed for easy remote testing
   and to avoid changing the API address when Wi-Fi networks change.
@@ -323,8 +351,9 @@ Expo device APIs; application data comes from the local Express API and PostgreS
   accurate facility coordinates.
 - **No offline synchronisation:** Offline caching, synchronisation, and conflict
   resolution are not yet implemented.
-- **Future reporting:** Forecasting, wastage reports, notifications, emergency donor
-  alerts, national dashboards, CI/CD, monitoring, and disaster recovery can be added.
+- **Reporting and alerts:** Forecasting, wastage reports, notifications, emergency
+  donor alerts, and national-level dashboards could be added later. A deployed
+  version would also need CI/CD, monitoring, backups, and disaster recovery.
 
 ## Additional Documentation
 

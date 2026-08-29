@@ -640,9 +640,6 @@ function Login({ onLogin }: { onLogin: (session: Session) => void }) {
           onPress={submit}
           disabled={loading}
         />
-        {!registering && (
-          <Text style={styles.demo}>Demo: donor@demo.local / Password123!</Text>
-        )}
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -5480,7 +5477,6 @@ const styles: any = StyleSheet.create({
   authOptionActive: { backgroundColor: INK },
   authOptionText: { fontSize: 13, fontWeight: "800", color: MUTED },
   form: { paddingTop: 18, gap: 16 },
-  demo: { textAlign: "center", fontSize: 12, color: MUTED },
   topbar: {
     height: 68,
     paddingHorizontal: 20,

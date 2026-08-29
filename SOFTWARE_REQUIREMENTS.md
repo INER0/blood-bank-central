@@ -2,10 +2,9 @@
 
 ## Purpose
 
-This document lists everything required to install, run, seed, and test the
-Blood Bank Central college project locally. The application is a Maldives-focused
-centralised blood bank system with an Expo React Native client, an Express API,
-and a PostgreSQL database.
+This document lists the software and configuration needed to run Blood Bank
+Central locally. The project contains an Expo React Native mobile app, an Express
+API, and a PostgreSQL database.
 
 ## Required Software
 
@@ -17,9 +16,9 @@ and a PostgreSQL database.
 | Git | Current stable version | Clones and versions the project |
 | Expo Go | A version compatible with Expo SDK 54 | Runs the app on a physical Android/iOS device |
 
-Docker Desktop with Docker Compose is optional. It provides PostgreSQL 16 using
-the included `docker-compose.yml`. A local PostgreSQL installation can be used
-instead.
+Docker Desktop with Docker Compose is optional, but it is the simplest way to
+start PostgreSQL with the included `docker-compose.yml`. PostgreSQL can also be
+installed and configured directly.
 
 For Android emulation, install Android Studio, the Android SDK, platform tools,
 and an Android Virtual Device. Hardware virtualisation must be enabled. A physical
@@ -59,33 +58,58 @@ reproducible installation after cloning.
 
 ## Environment Variables
 
-Create `.env` from `.env.example`:
+The API and mobile app use separate environment files. Create them from their
+respective examples:
+
+```powershell
+Copy-Item .env.example apps/api/.env
+Copy-Item apps/mobile/.env.example apps/mobile/.env
+```
+
+The API file contains:
 
 ```env
 DATABASE_URL=postgresql://bloodbank:bloodbank@localhost:5432/bloodbank
 JWT_SECRET=replace-this-for-real-use
 PORT=4000
-EXPO_PUBLIC_API_URL=http://localhost:4000/api
 ```
 
 `JWT_SECRET` must be replaced with a long random secret outside local testing.
-Do not commit the real `.env` file.
+Do not commit either real `.env` file.
+
+Before starting Expo, edit `apps/mobile/.env` and replace
+`YOUR_COMPUTER_IP` with the computer's Wi-Fi IPv4 address:
+
+```env
+EXPO_PUBLIC_API_URL=http://192.168.1.20:4000/api
+```
+
+The address above is only an example. Run `ipconfig` to find the correct address
+for the current computer and network.
 
 API address rules:
 
 - Android emulator: use `http://10.0.2.2:4000/api` when localhost forwarding is unavailable.
 - Physical phone: use the computer's current LAN IP, such as `http://192.168.1.20:4000/api`.
 - The phone and computer must share a network, and the firewall must allow TCP port `4000`.
-- Tunnel mode can avoid LAN addressing: `npm run dev:mobile -- --tunnel`.
+- Expo tunnel mode helps the phone reach Metro, but the API URL must still be
+  reachable from the phone.
 
 ## Fresh Installation
 
 ```powershell
 git clone <repository-url>
-cd "Blood Bank Central"
-Copy-Item .env.example .env
+cd blood-bank-central
 npm ci
-docker compose up -d
+Copy-Item .env.example apps/api/.env
+Copy-Item apps/mobile/.env.example apps/mobile/.env
+```
+
+Edit `apps/mobile/.env` as described above. Then start the Docker database and
+wait for it to become healthy:
+
+```powershell
+docker compose up -d --wait
 npm run db:migrate
 npm run db:seed
 ```

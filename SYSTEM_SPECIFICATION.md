@@ -2,11 +2,11 @@
 
 ## 1. Project Summary
 
-Blood Bank Central is a college demonstration of a centralised Maldives blood
-bank network. It connects public donors and patients with hospitals and blood
-banks while maintaining a common patient identity through Maldives ID cards.
-The current release is designed for local development and testing, not clinical
-or production use.
+Blood Bank Central is a prototype of a centralised blood bank network for the
+Maldives. It brings donor, patient, hospital, and blood inventory tasks into one
+system and uses Maldives ID cards to match patient records between facilities.
+This version was made for local demonstration and testing; it is not intended
+for clinical or production use.
 
 ## 2. System Architecture
 
